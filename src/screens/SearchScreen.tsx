@@ -1,12 +1,63 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import yelp from "../api/yelp";
 import SearchBar from "../components/SearchBar";
 
+export interface Business {
+  rating: number;
+  price: string;
+  phone: string;
+  id: string;
+  alias: string;
+  is_closed: boolean;
+  categories: {
+    alias: string;
+    title: string;
+  }[];
+  review_count: number;
+  name: string;
+  url: string;
+  coordinates: {
+    latitude: string;
+    longitude: string;
+  };
+  image_url: string;
+  location: {
+    city: string;
+    country: string;
+    address2: string;
+    address3: string;
+    address1: string;
+    state: string;
+    zip_code: string;
+  };
+  distance: number;
+  transactions: string[];
+}
+
 const SearchScreen = () => {
+  const [inp, setInp] = useState<string>("");
+  const [results, setResults] = useState<Business[]>([]);
   return (
     <View>
-      <SearchBar />
-      <Text>SearchScreen SearchScreen</Text>
+      <SearchBar
+        inp={inp}
+        setInp={setInp}
+        onSubmit={async () => {
+          const { data } = await yelp("/search", {
+            params: {
+              term: inp,
+              location: "new york"
+            }
+          });
+          setResults(data.businesses);
+        }}
+      />
+      <FlatList
+        data={results}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => <Text>{JSON.stringify(item, null, 2)}</Text>}
+      />
     </View>
   );
 };

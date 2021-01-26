@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
+interface Props {
+  setInp: React.Dispatch<React.SetStateAction<string>>;
+  inp: string;
+  onSubmit: () => void;
+}
+const SearchBar: React.FC<Props> = props => {
+  const { setInp, inp, onSubmit } = props;
 
-const SearchBar = () => {
-  const [inp, setInp] = useState<string>("");
   return (
     <View style={styles.background}>
       <Feather name="search" size={35} />
@@ -13,6 +18,9 @@ const SearchBar = () => {
         placeholder="Search"
         onChangeText={text => setInp(text)}
         value={inp}
+        autoCapitalize="none"
+        autoCorrect={false}
+        onEndEditing={e => onSubmit()}
       />
     </View>
   );
@@ -29,7 +37,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingLeft: 10,
-    marginTop: 15
+    marginVertical: 10
   },
   input: {
     height: 50,
