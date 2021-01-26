@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
 
 const SearchBar = () => {
+  const [inp, setInp] = useState<string>("");
   return (
     <View style={styles.background}>
       <Feather name="search" size={35} />
-      <TextInput style={styles.input} placeholder="Search" />
+      <TextInput
+        style={styles.input}
+        placeholder="Search"
+        onChangeText={text => setInp(text)}
+        value={inp}
+      />
     </View>
   );
 };
