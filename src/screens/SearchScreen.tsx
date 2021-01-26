@@ -38,21 +38,27 @@ export interface Business {
 const SearchScreen = () => {
   const [inp, setInp] = useState<string>("");
   const [results, setResults] = useState<Business[]>([]);
+  const [error, setError] = useState<string>("");
   return (
     <View>
       <SearchBar
         inp={inp}
         setInp={setInp}
         onSubmit={async () => {
-          const { data } = await yelp("/search", {
-            params: {
-              term: inp,
-              location: "new york"
-            }
-          });
-          setResults(data.businesses);
+          try {
+            const { data } = await yelp("/search", {
+              params: {
+                term: inp,
+                location: "new york"
+              }
+            });
+            setResults(data.businesses);
+          } catch (error) {
+            setError("Something went wrong");
+          }
         }}
       />
+      {error ? <Text>{error}</Text> : null}
       <FlatList
         data={results}
         keyExtractor={item => item.id}
