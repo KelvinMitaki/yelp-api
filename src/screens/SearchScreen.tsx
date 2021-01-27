@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import yelp from "../api/yelp";
 import SearchBar from "../components/SearchBar";
@@ -39,25 +39,25 @@ const SearchScreen = () => {
   const [inp, setInp] = useState<string>("");
   const [results, setResults] = useState<Business[]>([]);
   const [error, setError] = useState<string>("");
+  useEffect(() => {
+    searchApi();
+  }, []);
+  const searchApi = async () => {
+    try {
+      const { data } = await yelp("/search", {
+        params: {
+          term: inp || "food",
+          location: "new york"
+        }
+      });
+      setResults(data.businesses);
+    } catch (error) {
+      setError("Something went wrong");
+    }
+  };
   return (
     <View>
-      <SearchBar
-        inp={inp}
-        setInp={setInp}
-        onSubmit={async () => {
-          try {
-            const { data } = await yelp("/search", {
-              params: {
-                term: inp,
-                location: "new york"
-              }
-            });
-            setResults(data.businesses);
-          } catch (error) {
-            setError("Something went wrong");
-          }
-        }}
-      />
+      <SearchBar inp={inp} setInp={setInp} onSubmit={() => searchApi()} />
       {error ? <Text>{error}</Text> : null}
       <FlatList
         data={results}
