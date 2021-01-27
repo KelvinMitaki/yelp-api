@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { withNavigation } from "react-navigation";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { Business } from "../screens/SearchScreen";
 
@@ -24,7 +25,7 @@ const ResultsDetails: React.FC<Props> = props => {
   );
 };
 
-export default ResultsDetails;
+export default withNavigation(ResultsDetails);
 
 const styles = StyleSheet.create({
   image: {

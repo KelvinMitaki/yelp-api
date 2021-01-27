@@ -53,17 +53,11 @@ const SearchScreen: React.FC<{ navigation: StackNavigationProp }> = props => {
 
       <ScrollView>
         <ResultsList
-          navigation={props.navigation}
           header={"Cost Effective"}
           restaurants={filterResults("$")}
         />
+        <ResultsList header={"Bit Pricier"} restaurants={filterResults("$$")} />
         <ResultsList
-          navigation={props.navigation}
-          header={"Bit Pricier"}
-          restaurants={filterResults("$$")}
-        />
-        <ResultsList
-          navigation={props.navigation}
           header={"Big Spender"}
           restaurants={[...filterResults("$$$"), ...filterResults("$$$$")]}
         />
