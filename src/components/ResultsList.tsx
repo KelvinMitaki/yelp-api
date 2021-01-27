@@ -11,8 +11,10 @@ interface Props {
 
 const ResultsList: React.FC<Props> = props => {
   return (
-    <View>
-      <Text style={styles.header}>{props.header}</Text>
+    <View style={styles.body}>
+      {props.restaurants.length !== 0 && (
+        <Text style={styles.header}>{props.header}</Text>
+      )}
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -20,7 +22,6 @@ const ResultsList: React.FC<Props> = props => {
         keyExtractor={item => item.id}
         renderItem={({ item }) => <ResultsDetails result={item} />}
       />
-      <Text>{props.restaurants.length}</Text>
     </View>
   );
 };
@@ -28,8 +29,13 @@ const ResultsList: React.FC<Props> = props => {
 export default ResultsList;
 
 const styles = StyleSheet.create({
+  body: {
+    marginVertical: 10
+  },
   header: {
     fontWeight: "bold",
-    fontSize: 20
+    fontSize: 20,
+    alignSelf: "center",
+    marginVertical: 10
   }
 });

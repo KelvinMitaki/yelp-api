@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { Business } from "../screens/SearchScreen";
 
 interface Props {
@@ -10,11 +10,26 @@ const ResultsDetails: React.FC<Props> = props => {
   const { result } = props;
   return (
     <View>
-      <Text>{result.name}</Text>
+      <Image source={{ uri: result.image_url }} style={styles.image} />
+      <Text style={styles.name}>{result.name}</Text>
+      <Text>
+        {result.rating} Stars,{result.review_count.toLocaleString()} Reviews
+      </Text>
     </View>
   );
 };
 
 export default ResultsDetails;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  image: {
+    width: 250,
+    height: 250,
+    borderRadius: 5,
+    marginHorizontal: 10
+  },
+  name: {
+    alignSelf: "center",
+    fontWeight: "bold"
+  }
+});

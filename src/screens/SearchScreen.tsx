@@ -49,7 +49,11 @@ const SearchScreen = () => {
     <ScrollView>
       <SearchBar inp={inp} setInp={setInp} onSubmit={() => searchApi()} />
       {error ? <Text>{error}</Text> : null}
-
+      {results.length !== 0 && (
+        <Text style={{ paddingLeft: 10 }}>
+          We have found {results.length} results
+        </Text>
+      )}
       <ResultsList header={"Cost Effective"} restaurants={filterResults("$")} />
       <ResultsList header={"Bit Pricier"} restaurants={filterResults("$$")} />
       <ResultsList
