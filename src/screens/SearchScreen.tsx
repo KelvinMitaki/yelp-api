@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import yelp from "../api/yelp";
+import ResultsList from "../components/ResultsList";
 import SearchBar from "../components/SearchBar";
 import useResults from "../hooks/useResults";
 
@@ -44,7 +44,11 @@ const SearchScreen = () => {
     <View>
       <SearchBar inp={inp} setInp={setInp} onSubmit={() => searchApi()} />
       {error ? <Text>{error}</Text> : null}
+      <ResultsList header={"Cost Effective"} />
+      <ResultsList header={"Bit Pricier"} />
+      <ResultsList header={"Big Spender"} />
       <FlatList
+        horizontal
         data={results}
         keyExtractor={item => item.id}
         renderItem={({ item }) => <Text>{JSON.stringify(item, null, 2)}</Text>}
