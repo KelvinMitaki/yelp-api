@@ -14,7 +14,9 @@ const ResultsDetails: React.FC<Props> = props => {
   const { result } = props;
   return (
     <View>
-      <TouchableOpacity onPress={() => props.navigation.navigate("Results")}>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate("Results", { id: result.id })}
+      >
         <Image source={{ uri: result.image_url }} style={styles.image} />
         <Text style={styles.name}>{result.name}</Text>
         <Text style={styles.desc}>
