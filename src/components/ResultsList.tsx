@@ -1,12 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { Business } from "../screens/SearchScreen";
 import ResultsDetails from "./ResultsDetails";
 
 interface Props {
   header: string;
   restaurants: Business[];
+  navigation: StackNavigationProp;
 }
 
 const ResultsList: React.FC<Props> = props => {
@@ -20,7 +22,9 @@ const ResultsList: React.FC<Props> = props => {
         showsHorizontalScrollIndicator={false}
         data={props.restaurants}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <ResultsDetails result={item} />}
+        renderItem={({ item }) => (
+          <ResultsDetails navigation={props.navigation} result={item} />
+        )}
       />
     </View>
   );

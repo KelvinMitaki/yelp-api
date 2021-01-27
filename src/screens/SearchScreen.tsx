@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { NavigationStackScreenProps } from "react-navigation-stack";
+import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import ResultsList from "../components/ResultsList";
 import SearchBar from "../components/SearchBar";
 import useResults from "../hooks/useResults";
@@ -37,30 +39,31 @@ export interface Business {
   transactions: string[];
 }
 
-const SearchScreen = () => {
+const SearchScreen: React.FC<{ navigation: StackNavigationProp }> = props => {
   const [inp, setInp] = useState<string>("");
   const [results, error, searchApi] = useResults(inp);
 
   const filterResults = (price: Business["price"]) => {
     return results.filter(res => res.price === price);
   };
-
   return (
     <View style={{ flex: 1 }}>
       <SearchBar inp={inp} setInp={setInp} onSubmit={() => searchApi()} />
       {error ? <Text>{error}</Text> : null}
-      {results.length !== 0 && (
-        <Text style={{ paddingLeft: 10 }}>
-          We have found {results.length} results
-        </Text>
-      )}
+
       <ScrollView>
         <ResultsList
+          navigation={props.navigation}
           header={"Cost Effective"}
           restaurants={filterResults("$")}
         />
-        <ResultsList header={"Bit Pricier"} restaurants={filterResults("$$")} />
         <ResultsList
+          navigation={props.navigation}
+          header={"Bit Pricier"}
+          restaurants={filterResults("$$")}
+        />
+        <ResultsList
+          navigation={props.navigation}
           header={"Big Spender"}
           restaurants={[...filterResults("$$$"), ...filterResults("$$$$")]}
         />
