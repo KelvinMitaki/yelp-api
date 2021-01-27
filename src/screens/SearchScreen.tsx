@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import yelp from "../api/yelp";
 import SearchBar from "../components/SearchBar";
+import useResults from "../hooks/useResults";
 
 export interface Business {
   rating: number;
@@ -37,24 +38,8 @@ export interface Business {
 
 const SearchScreen = () => {
   const [inp, setInp] = useState<string>("");
-  const [results, setResults] = useState<Business[]>([]);
-  const [error, setError] = useState<string>("");
-  useEffect(() => {
-    searchApi();
-  }, []);
-  const searchApi = async () => {
-    try {
-      const { data } = await yelp("/search", {
-        params: {
-          term: inp || "food",
-          location: "new york"
-        }
-      });
-      setResults(data.businesses);
-    } catch (error) {
-      setError("Something went wrong");
-    }
-  };
+  const [results, error, searchApi] = useResults(inp);
+
   return (
     <View>
       <SearchBar inp={inp} setInp={setInp} onSubmit={() => searchApi()} />
