@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import ResultsList from "../components/ResultsList";
 import SearchBar from "../components/SearchBar";
 import useResults from "../hooks/useResults";
 
 export interface Business {
   rating: number;
-  price: string;
+  price: "$" | "$$" | "$$$" | "$$$$";
   phone: string;
   id: string;
   alias: string;
@@ -40,20 +41,22 @@ const SearchScreen = () => {
   const [inp, setInp] = useState<string>("");
   const [results, error, searchApi] = useResults(inp);
 
+  const filterResults = (price: Business["price"]) => {
+    return results.filter(res => res.price === price);
+  };
+
   return (
-    <View>
+    <ScrollView>
       <SearchBar inp={inp} setInp={setInp} onSubmit={() => searchApi()} />
       {error ? <Text>{error}</Text> : null}
-      <ResultsList header={"Cost Effective"} />
-      <ResultsList header={"Bit Pricier"} />
-      <ResultsList header={"Big Spender"} />
-      <FlatList
-        horizontal
-        data={results}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => <Text>{JSON.stringify(item, null, 2)}</Text>}
+
+      <ResultsList header={"Cost Effective"} restaurants={filterResults("$")} />
+      <ResultsList header={"Bit Pricier"} restaurants={filterResults("$$")} />
+      <ResultsList
+        header={"Big Spender"}
+        restaurants={[...filterResults("$$$"), ...filterResults("$$$$")]}
       />
-    </View>
+    </ScrollView>
   );
 };
 
