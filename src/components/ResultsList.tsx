@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Business } from "../screens/SearchScreen";
+import ResultsDetails from "./ResultsDetails";
 
 interface Props {
   header: string;
@@ -14,10 +15,12 @@ const ResultsList: React.FC<Props> = props => {
       <Text style={styles.header}>{props.header}</Text>
       <FlatList
         horizontal
+        showsHorizontalScrollIndicator={false}
         data={props.restaurants}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <Text>{JSON.stringify(item, null, 2)}</Text>}
+        renderItem={({ item }) => <ResultsDetails result={item} />}
       />
+      <Text>{props.restaurants.length}</Text>
     </View>
   );
 };

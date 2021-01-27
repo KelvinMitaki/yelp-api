@@ -15,8 +15,9 @@ const useResults = (
     try {
       const { data } = await yelp("/search", {
         params: {
-          term: inp || "food",
-          location: "new york"
+          term: inp || "meat",
+          location: "new york",
+          limit: 50
         }
       });
       setResults(data.businesses);
