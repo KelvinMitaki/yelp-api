@@ -63,8 +63,9 @@ const ResultsShowScreen: React.FC<{
   navigation: StackNavigationProp<NavigationRoute, { id: string }>;
 }> = props => {
   const [details, setDetails] = useState<BusinessDetails | null>(null);
+  const id = props.navigation.getParam("id");
   useEffect(() => {
-    resultsDetails(props.navigation.state.params!.id);
+    resultsDetails(id);
   }, []);
   const resultsDetails = async (id: string) => {
     const { data } = await yelp.get(`/${id}`);
