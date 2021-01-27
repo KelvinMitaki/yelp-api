@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
 import yelp from "../api/yelp";
 import { Business } from "../screens/SearchScreen";
 
@@ -15,7 +15,7 @@ const useResults = (
     try {
       const { data } = await yelp("/search", {
         params: {
-          term: inp || "meat",
+          term: inp || "chicken",
           location: "new york",
           limit: 50
         }

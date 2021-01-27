@@ -46,7 +46,7 @@ const SearchScreen = () => {
   };
 
   return (
-    <ScrollView>
+    <View style={{ flex: 1 }}>
       <SearchBar inp={inp} setInp={setInp} onSubmit={() => searchApi()} />
       {error ? <Text>{error}</Text> : null}
       {results.length !== 0 && (
@@ -54,13 +54,18 @@ const SearchScreen = () => {
           We have found {results.length} results
         </Text>
       )}
-      <ResultsList header={"Cost Effective"} restaurants={filterResults("$")} />
-      <ResultsList header={"Bit Pricier"} restaurants={filterResults("$$")} />
-      <ResultsList
-        header={"Big Spender"}
-        restaurants={[...filterResults("$$$"), ...filterResults("$$$$")]}
-      />
-    </ScrollView>
+      <ScrollView>
+        <ResultsList
+          header={"Cost Effective"}
+          restaurants={filterResults("$")}
+        />
+        <ResultsList header={"Bit Pricier"} restaurants={filterResults("$$")} />
+        <ResultsList
+          header={"Big Spender"}
+          restaurants={[...filterResults("$$$"), ...filterResults("$$$$")]}
+        />
+      </ScrollView>
+    </View>
   );
 };
 

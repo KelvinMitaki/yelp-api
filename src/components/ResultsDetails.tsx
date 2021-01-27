@@ -12,8 +12,8 @@ const ResultsDetails: React.FC<Props> = props => {
     <View>
       <Image source={{ uri: result.image_url }} style={styles.image} />
       <Text style={styles.name}>{result.name}</Text>
-      <Text>
-        {result.rating} Stars,{result.review_count.toLocaleString()} Reviews
+      <Text style={styles.desc}>
+        {result.rating} Stars, {result.review_count.toLocaleString()} Reviews
       </Text>
     </View>
   );
@@ -31,5 +31,8 @@ const styles = StyleSheet.create({
   name: {
     alignSelf: "center",
     fontWeight: "bold"
+  },
+  desc: {
+    marginHorizontal: 10
   }
 });
